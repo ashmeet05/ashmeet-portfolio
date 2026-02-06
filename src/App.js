@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
+import logo from "./assets/logo.png";
+import profilePhoto from "./assets/profile-photo.jpg";
+import swimImage from "./assets/swimmeet.jpg";
+import saffronImage from "./assets/saffron.png";
+import libraryImage from "./assets/library.jpg";
+import  resume from "./assets/resume.pdf";
+
 
 function App() {
   const [formData, setFormData] = useState({
@@ -36,7 +43,8 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <a href="#home" className="logo">
-            <img src="/assets/logo.png" alt="Logo" />
+            <img src={logo} alt="Logo" />
+
             <span>Ashmeet Kaur</span>
           </a>
           <div className="nav-links">
@@ -88,7 +96,7 @@ function App() {
         <div className="about-content">
           <div className="profile">
             <img
-              src="/assets/profile-photo.jpg"
+              src={profilePhoto}
               alt="Ashmeet Kaur"
               className="profile-photo"
             />
@@ -96,7 +104,7 @@ function App() {
             <p>Software Engineering Technology - AI</p>
             <p>Expected 2027 | GPA: 3.6/4.0</p>
             <a
-              href="/assets/resume.pdf"
+              href={resume}
               download
               className="btn"
             >
@@ -145,7 +153,7 @@ function App() {
 
   <div className="project-card">
     <div className="project-image">
-      <img src="/assets/swimeet.jpg" alt="SwimMeet Pro" />
+      <img src={swimImage} alt="SwimMeet Pro" />
     </div>
 
     <h3>SwimMeet Pro</h3>
@@ -168,7 +176,7 @@ function App() {
 
   <div className="project-card">
     <div className="project-image">
-      <img src="/assets/library.jpg" alt="Library System" />
+      <img src={libraryImage} alt="Library System" />
     </div>
 
     <h3>Library Management System</h3>
@@ -190,7 +198,7 @@ function App() {
 
   <div className="project-card">
     <div className="project-image">
-      <img src="/assets/saffron.png" alt="Saffron Essence" />
+      <img src={saffronImage} alt="Saffron Essence" />
     </div>
 
     <h3>Saffron Essence</h3>
