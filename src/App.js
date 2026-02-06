@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
-import logo from "./assets/logo.png";
+import logo from "./assets/logo-new.png";
 import profilePhoto from "./assets/profile-photo.jpg";
 import swimImage from "./assets/swimmeet.jpg";
 import saffronImage from "./assets/saffron.png";
 import libraryImage from "./assets/library.jpg";
-import  resume from "./assets/resume.pdf";
+import resume from "./assets/resume.pdf";
 
 
 function App() {
