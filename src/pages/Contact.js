@@ -1,28 +1,34 @@
 import React, { useState } from "react";
+import { createReference } from "../services/api";
 
 function Contact() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
-    phone: "",
-    message: "",
+    position: "",
+    company: "",
   });
+  const [status, setStatus] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Message sent!");
-    setFormData({ firstName: "", lastName: "", email: "", phone: "", message: "" });
+    try {
+      await createReference(formData);
+      setStatus("success");
+      setFormData({ firstname: "", lastname: "", email: "", position: "", company: "" });
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
     <section className="section contact">
       <h2>Get In Touch</h2>
-
       <div className="contact-content">
         <div className="contact-info">
           <h3>Contact Information</h3>
@@ -48,12 +54,14 @@ function Contact() {
 
         <div className="contact-form">
           <h3>Send Me a Message</h3>
+          {status === "success" && <p style={{ color: "green", marginBottom: "1rem" }}>Message sent successfully!</p>}
+          {status === "error" && <p style={{ color: "red", marginBottom: "1rem" }}>Something went wrong. Please try again.</p>}
           <form onSubmit={handleSubmit}>
-            <input type="text" name="firstName" placeholder="First Name *" value={formData.firstName} onChange={handleChange} required />
-            <input type="text" name="lastName" placeholder="Last Name *" value={formData.lastName} onChange={handleChange} required />
+            <input type="text" name="firstname" placeholder="First Name *" value={formData.firstname} onChange={handleChange} required />
+            <input type="text" name="lastname" placeholder="Last Name *" value={formData.lastname} onChange={handleChange} required />
             <input type="email" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required />
-            <input type="tel" name="phone" placeholder="Phone *" value={formData.phone} onChange={handleChange} required />
-            <textarea name="message" placeholder="Your Message *" rows="6" value={formData.message} onChange={handleChange} required></textarea>
+            <input type="text" name="position" placeholder="Your Position" value={formData.position} onChange={handleChange} />
+            <input type="text" name="company" placeholder="Company" value={formData.company} onChange={handleChange} />
             <button type="submit" className="btn">Send Message</button>
           </form>
         </div>
