@@ -1,0 +1,19 @@
+{
+  "name": "Sign Out",
+  "testCount": 1,
+  "tests": [
+    {
+      "name": "Authenticated user can sign out",
+      "steps": [
+        { "action": "visit", "url": "http://localhost:3000/signin" },
+        { "action": "type", "selector": "input[name='email']", "value": "testuser@example.com" },
+        { "action": "type", "selector": "input[name='password']", "value": "password123" },
+        { "action": "click", "selector": "button[type='submit']" },
+        { "action": "url", "should": "include", "value": "/dashboard" },
+        { "action": "click", "selector": ".nav-logout-btn" },
+        { "action": "url", "should": "equal", "value": "http://localhost:3000/" },
+        { "action": "localStorage", "key": "token", "should": "not.exist" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Edit Project",
+  "testCount": 1,
+  "tests": [
+    {
+      "name": "Authenticated user can edit an existing project",
+      "steps": [
+        { "action": "visit", "url": "http://localhost:3000/signin" },
+        { "action": "type", "selector": "input[name='email']", "value": "testuser@example.com" },
+        { "action": "type", "selector": "input[name='password']", "value": "password123" },
+        { "action": "click", "selector": "button[type='submit']" },
+        { "action": "url", "should": "include", "value": "/dashboard" },
+        { "action": "visit", "url": "http://localhost:3000/admin/projects" },
+        { "action": "click", "selector": ".edit-btn" },
+        { "action": "clear", "selector": "input[placeholder='Title']" },
+        { "action": "type", "selector": "input[placeholder='Title']", "value": "Updated Project Title" },
+        { "action": "click", "selector": "button[type='submit']" },
+        { "action": "contains", "value": "Updated Project Title" }
+      ]
+    }
+  ]
+}

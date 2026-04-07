@@ -1,0 +1,22 @@
+{
+  "name": "Add Project",
+  "testCount": 1,
+  "tests": [
+    {
+      "name": "Authenticated user can add a new project",
+      "steps": [
+        { "action": "visit", "url": "http://localhost:3000/signin" },
+        { "action": "type", "selector": "input[name='email']", "value": "testuser@example.com" },
+        { "action": "type", "selector": "input[name='password']", "value": "password123" },
+        { "action": "click", "selector": "button[type='submit']" },
+        { "action": "url", "should": "include", "value": "/dashboard" },
+        { "action": "visit", "url": "http://localhost:3000/admin/projects" },
+        { "action": "type", "selector": "input[placeholder='Title']", "value": "My Test Project" },
+        { "action": "type", "selector": "input[type='date']", "value": "2024-01-15" },
+        { "action": "type", "selector": "input[placeholder='Description']", "value": "A test project added via Cypress" },
+        { "action": "click", "selector": "button[type='submit']" },
+        { "action": "contains", "value": "My Test Project" }
+      ]
+    }
+  ]
+}

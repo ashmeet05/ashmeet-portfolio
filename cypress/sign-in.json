@@ -1,0 +1,17 @@
+{
+  "name": "Sign In",
+  "testCount": 1,
+  "tests": [
+    {
+      "name": "User can sign in with valid credentials",
+      "steps": [
+        { "action": "visit", "url": "http://localhost:3000/signin" },
+        { "action": "type", "selector": "input[name='email']", "value": "testuser@example.com" },
+        { "action": "type", "selector": "input[name='password']", "value": "password123" },
+        { "action": "click", "selector": "button[type='submit']" },
+        { "action": "url", "should": "include", "value": "/dashboard" },
+        { "action": "localStorage", "key": "token", "should": "exist" }
+      ]
+    }
+  ]
+}
