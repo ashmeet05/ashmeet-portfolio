@@ -11,7 +11,7 @@ function About() {
         <div className="profile">
           <img src={profilePhoto} alt="Ashmeet Kaur" className="profile-photo" />
           <h3>Ashmeet Kaur</h3>
-          <p>Software Engineering Technology - AI</p>
+          <p>Software Engineering Technician </p>
           <p>Expected 2027 | GPA: 3.6/4.0</p>
           <a href={resume} download className="btn">Download Resume</a>
         </div>
@@ -20,7 +20,7 @@ function About() {
           <h3>About Me</h3>
           <p>
             Hi, I'm Ashmeet. I'm currently studying Software Engineering
-            Technology with a focus on Artificial Intelligence. I enjoy building
+            Technician with a focus on Artificial Intelligence. I enjoy building
             practical applications and turning ideas into structured, working systems.
           </p>
           <p>
