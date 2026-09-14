@@ -7,7 +7,7 @@ function Home() {
       <h1>Hi, I'm Ashmeet Kaur</h1>
       <h2>Software Engineering Student</h2>
       <p>
-        I'm currently studying Software Engineering Technology with a focus
+        I'm currently studying Software Engineering Technician with a focus
         on Artificial Intelligence at Centennial College.
       </p>
 
