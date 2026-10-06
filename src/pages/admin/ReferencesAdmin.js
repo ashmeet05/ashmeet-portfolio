@@ -8,10 +8,12 @@ function ReferencesAdmin() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const loadReferences = () => {
     getReferences().then((res) => {
       setReferences(Array.isArray(res) ? res : res.data || []);
+      if (res && res.success === false) setError(res.message || "Could not load data.");
       setLoading(false);
     });
   };
@@ -22,11 +24,12 @@ function ReferencesAdmin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editingId) {
-      await updateReference(editingId, form);
-    } else {
-      await createReference(form);
+    const res = editingId ? await updateReference(editingId, form) : await createReference(form);
+    if (!res || res.success === false) {
+      setError((res && res.message) || "Could not save. Please try again.");
+      return;
     }
+    setError("");
     setForm(emptyForm);
     setEditingId(null);
     loadReferences();
@@ -39,7 +42,12 @@ function ReferencesAdmin() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this contact?")) {
-      await deleteReference(id);
+      const res = await deleteReference(id);
+      if (!res || res.success === false) {
+        setError((res && res.message) || "Could not delete. Please try again.");
+        return;
+      }
+      setError("");
       loadReferences();
     }
   };
@@ -47,6 +55,7 @@ function ReferencesAdmin() {
   return (
     <section className="section">
       <h2>Manage Contacts</h2>
+      {error && <p role="alert" style={{ color: "#e74c3c", marginBottom: "1rem" }}>{error}</p>}
       <div className="about-content">
         <div className="contact-form">
           <h3>{editingId ? "Edit Contact" : "Add Contact"}</h3>

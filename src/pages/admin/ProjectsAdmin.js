@@ -8,10 +8,12 @@ function ProjectsAdmin() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const loadProjects = () => {
     getProjects().then((res) => {
       setProjects(Array.isArray(res) ? res : res.data || []);
+      if (res && res.success === false) setError(res.message || "Could not load data.");
       setLoading(false);
     });
   };
@@ -22,11 +24,12 @@ function ProjectsAdmin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editingId) {
-      await updateProject(editingId, form);
-    } else {
-      await createProject(form);
+    const res = editingId ? await updateProject(editingId, form) : await createProject(form);
+    if (!res || res.success === false) {
+      setError((res && res.message) || "Could not save. Please try again.");
+      return;
     }
+    setError("");
     setForm(emptyForm);
     setEditingId(null);
     loadProjects();
@@ -43,7 +46,12 @@ function ProjectsAdmin() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this project?")) {
-      await deleteProject(id);
+      const res = await deleteProject(id);
+      if (!res || res.success === false) {
+        setError((res && res.message) || "Could not delete. Please try again.");
+        return;
+      }
+      setError("");
       loadProjects();
     }
   };
@@ -51,6 +59,7 @@ function ProjectsAdmin() {
   return (
     <section className="section">
       <h2>Manage Projects</h2>
+      {error && <p role="alert" style={{ color: "#e74c3c", marginBottom: "1rem" }}>{error}</p>}
       <div className="about-content">
         <div className="contact-form">
           <h3>{editingId ? "Edit Project" : "Add Project"}</h3>

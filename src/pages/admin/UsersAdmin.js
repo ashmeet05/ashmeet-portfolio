@@ -8,10 +8,12 @@ function UsersAdmin() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const loadUsers = () => {
     getUsers().then((res) => {
       setUsers(Array.isArray(res) ? res : res.data || []);
+      if (res && res.success === false) setError(res.message || "Could not load data.");
       setLoading(false);
     });
   };
@@ -22,11 +24,12 @@ function UsersAdmin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editingId) {
-      await updateUser(editingId, form);
-    } else {
-      await createUser(form);
+    const res = editingId ? await updateUser(editingId, form) : await createUser(form);
+    if (!res || res.success === false) {
+      setError((res && res.message) || "Could not save. Please try again.");
+      return;
     }
+    setError("");
     setForm(emptyForm);
     setEditingId(null);
     loadUsers();
@@ -39,7 +42,12 @@ function UsersAdmin() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this user?")) {
-      await deleteUser(id);
+      const res = await deleteUser(id);
+      if (!res || res.success === false) {
+        setError((res && res.message) || "Could not delete. Please try again.");
+        return;
+      }
+      setError("");
       loadUsers();
     }
   };
@@ -47,6 +55,7 @@ function UsersAdmin() {
   return (
     <section className="section">
       <h2>Manage Users</h2>
+      {error && <p role="alert" style={{ color: "#e74c3c", marginBottom: "1rem" }}>{error}</p>}
       <div className="about-content">
         <div className="contact-form">
           <h3>{editingId ? "Edit User" : "Add User"}</h3>
@@ -54,7 +63,7 @@ function UsersAdmin() {
             <input type="text" name="firstname" placeholder="First Name *" value={form.firstname} onChange={handleChange} required />
             <input type="text" name="lastname" placeholder="Last Name *" value={form.lastname} onChange={handleChange} required />
             <input type="email" name="email" placeholder="Email *" value={form.email} onChange={handleChange} required />
-            <input type="password" name="password" placeholder="Password *" value={form.password} onChange={handleChange} required={!editingId} />
+            <input type="password" name="password" placeholder={editingId ? "New password (leave blank to keep)" : "Password *"} value={form.password} onChange={handleChange} required={!editingId} />
             <button type="submit" className="btn">{editingId ? "Update User" : "Add User"}</button>
             {editingId && (
               <button type="button" className="btn" style={{ background: "var(--text-secondary)", marginTop: "0.5rem" }} onClick={() => { setForm(emptyForm); setEditingId(null); }}>Cancel</button>

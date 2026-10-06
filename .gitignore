@@ -134,3 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Build output and local tool settings
+/build
+.claude/
+.env
+*.zip
