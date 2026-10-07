@@ -20,8 +20,7 @@ import ReferencesAdmin from "./pages/admin/ReferencesAdmin";
 function App() {
   return (
     <AuthProvider>
-      {/* basename lets routes work when the site lives at /ashmeet-portfolio on GitHub Pages */}
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <div className="App">
           <Navbar />
           <Routes>
